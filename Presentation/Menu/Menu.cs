@@ -21,8 +21,7 @@ namespace Presentation.Menu
         {
             string option;
             while (true)
-            {
-               // Console.Clear();
+            {  
                 Console.WriteLine("=====================================");
                 Console.WriteLine("             OctopuStore             ");
                 Console.WriteLine("=====================================\n");

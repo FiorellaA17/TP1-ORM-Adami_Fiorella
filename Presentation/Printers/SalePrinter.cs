@@ -28,7 +28,6 @@ namespace Presentation.Printers
             Console.WriteLine($"Descuento total: $ {sale.TotalDiscount}");
             Console.WriteLine($"Impuestos IVA {(sale.Taxes -1)* 100}%");
             Console.WriteLine($"Total a pagar: $ {sale.TotalPay}");
-
         }
     }
 }

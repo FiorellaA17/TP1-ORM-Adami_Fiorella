@@ -10,7 +10,7 @@ namespace Presentation.Printers
         {
             Console.WriteLine("\n=====================================");
             Console.WriteLine("          Lista de Productos         ");
-            Console.WriteLine("=====================================");
+            Console.WriteLine("=====================================\n");
             try
             {
                 if (products.Count > 0)
@@ -41,7 +41,6 @@ namespace Presentation.Printers
             Console.WriteLine($"Precio: {product.Price}");
             Console.WriteLine($"Categoría: {product.CategoryName.Name}");
             Console.WriteLine($"Descuento: {product.Discount} %");
-            //Console.WriteLine($"Imagen: {product.ImageUrl}");
             Console.WriteLine("\n--------------------------------------------------------------\n");
         }
     }

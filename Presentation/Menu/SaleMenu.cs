@@ -7,8 +7,7 @@ namespace Presentation.Menu
     public class SaleMenu
     {
         private readonly IProductService _productService;
-        private readonly ISaleService _saleService;
-       
+        private readonly ISaleService _saleService; 
 
         public SaleMenu(IProductService productService, ISaleService saleService)
         {
@@ -21,7 +20,6 @@ namespace Presentation.Menu
             string option;
             while (true)
             {
-                //Console.Clear();
                 Console.WriteLine("\n=== Menú de Venta === \n");
                 Console.WriteLine("1. Registrar venta");
                 Console.WriteLine("2. Volver al menu principal");
@@ -40,8 +38,11 @@ namespace Presentation.Menu
                         case "2":
                             return;
                         case "0":
-                            Console.WriteLine("Saliendo del menú de ventas.");       
-                            return;
+                            Console.WriteLine("¡Hasta luego!");
+                            Thread.Sleep(1000);
+                            Console.Clear();
+                            Environment.Exit(0);
+                            break;
                         default:
                             Console.WriteLine("Opcion invalida. Intente nuevamente.");
                             break;
@@ -58,7 +59,7 @@ namespace Presentation.Menu
 
             while (true)
             {
-                Console.Write("\nIngrese el ID del producto o '0' para salir: ");
+                Console.Write("\nIngrese el ID del producto o '0' para volver al menu: ");
                 string productIdInput = Console.ReadLine();
 
                 if (productIdInput.ToUpper() == "0")

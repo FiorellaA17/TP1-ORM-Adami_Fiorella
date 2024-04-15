@@ -20,7 +20,7 @@ namespace Application.Service
 
         public Product GetProductById(Guid id)
         {
-            return _QueryProduct.GetListProducts().FirstOrDefault(product => product.ProductId == id);
+            return _QueryProduct.GetProductById(id);
         }
     }
 }

@@ -37,7 +37,6 @@ namespace Application.Service
 
                     Console.WriteLine("\nVenta registrada e impresa exitosamente.\n");
                     Console.WriteLine("\nPresione una tecla cualquiera para volver al menu...");
-                    Console.ReadKey();
                 }
                 else
                 {
@@ -49,7 +48,6 @@ namespace Application.Service
             {
                 Console.WriteLine("La venta no contiene ningún producto.");
                 Console.WriteLine("\nPresione una tecla cualquiera para volver al menu...");
-                Console.ReadKey();
             }
         }
 
