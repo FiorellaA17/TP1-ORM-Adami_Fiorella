@@ -35,13 +35,21 @@ namespace Presentation.Printers
         }
         public void PrintProduct(Product product)
         {
-            Console.WriteLine($"ID: {product.ProductId}");
-            Console.WriteLine($"Nombre: {product.Name}");
-            Console.WriteLine($"Descripción: {product.Description}");
-            Console.WriteLine($"Precio: {product.Price}");
-            Console.WriteLine($"Categoría: {product.CategoryName.Name}");
-            Console.WriteLine($"Descuento: {product.Discount} %");
-            Console.WriteLine("\n--------------------------------------------------------------\n");
+            try 
+            {
+                Console.WriteLine($"ID: {product.ProductId}");
+                Console.WriteLine($"Nombre: {product.Name}");
+                Console.WriteLine($"Descripción: {product.Description}");
+                Console.WriteLine($"Precio: {product.Price}");
+                Console.WriteLine($"Categoría: {product.CategoryName.Name}");
+                Console.WriteLine($"Descuento: {product.Discount} %");
+                Console.WriteLine("\n--------------------------------------------------------------\n"); 
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al imprimir el producto: {ex.Message}");
+            }
+
         }
     }
 }
