@@ -20,89 +20,73 @@ namespace Application.Service
 
         public void CreateSale(List<(Guid productId, int quantity)> productIdsAndQuantities)
         {
-            try
+            var sale = GenerateSale(productIdsAndQuantities);
+
+            if (sale.SaleProducts.Count > 0)
             {
-                var sale = GenerateSale(productIdsAndQuantities);
+                _salePrinter.SaleDetail(sale);
 
-                if (sale.SaleProducts.Count > 0)
+                Console.Write("\n¿Desea registrar y luego imprimir la venta? (S/N): ");
+                string confirmation = Console.ReadLine();
+
+                if (confirmation.ToUpper() == "S")
                 {
-                    _salePrinter.SaleDetail(sale);
+                    _saleCommand.AddSale(sale);
 
-                    Console.Write("\n¿Desea registrar y luego imprimir la venta? (S/N): ");
-                    string confirmation = Console.ReadLine();
+                    _salePrinter.SalePrint(sale);
 
-                    if (confirmation.ToUpper() == "S")
-                    {
-                        _saleCommand.AddSale(sale);
-
-                        _salePrinter.SalePrint(sale);
-
-                        Console.WriteLine("\nVenta registrada e impresa exitosamente.\n");
-                        Console.WriteLine("\nPresione una tecla cualquiera para volver al menu...");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Venta cancelada.");
-                        Console.WriteLine("\nPresione una tecla cualquiera para volver al menu...");
-                    }
+                    Console.WriteLine("\nVenta registrada e impresa exitosamente.\n");
+                    Console.WriteLine("\nPresione una tecla cualquiera para volver al menu...");
                 }
                 else
                 {
-                    Console.WriteLine("La venta no contiene ningún producto.");
+                    Console.WriteLine("Venta cancelada.");
                     Console.WriteLine("\nPresione una tecla cualquiera para volver al menu...");
                 }
             }
-            catch (Exception ex)
+            else
             {
-                Console.WriteLine($"Error al crear la venta: {ex.Message}");
+                Console.WriteLine("La venta no contiene ningún producto.");
+                Console.WriteLine("\nPresione una tecla cualquiera para volver al menu...");
             }
         }
 
         public Sale GenerateSale(List<(Guid productId, int quantity)> productIdsAndQuantities)
         {
-            try
+            var newSale = new Sale
             {
-                var newSale = new Sale
-                {
                 Date = DateTime.Now,
                 SaleProducts = new List<SaleProduct>()
-                };
+            };
 
-                decimal subtotal = 0;
-                decimal totalDiscount = 0;
+            decimal subtotal = 0;
+            decimal totalDiscount = 0;
 
-                foreach (var (productId, quantity) in productIdsAndQuantities)
-                {
-                    var product = _product.GetProductById(productId);
-                    if (product != null)
-                    {
-                        decimal discountedPrice = product.Price - (product.Price * (product.Discount / 100.0m));
-                        subtotal += product.Price * quantity;
-                        totalDiscount += Math.Round((product.Price * quantity) - (discountedPrice * quantity), 2);
-
-                        newSale.SaleProducts.Add(new SaleProduct
-                        {
-                            Product = product.ProductId,
-                            Quantity = quantity,
-                            Price = product.Price,
-                            Discount = product.Discount
-                        });
-                    }
-                }
-
-                newSale.Subtotal = subtotal;
-                newSale.TotalDiscount = totalDiscount;
-                newSale.Taxes = 1.21m;
-                newSale.TotalPay = Math.Round(((subtotal - totalDiscount) * newSale.Taxes),2);
-
-                return newSale;
-                }
-            
-             catch (Exception ex)
+            foreach (var (productId, quantity) in productIdsAndQuantities)
             {
-                Console.WriteLine($"Error al generar la venta: {ex.Message}");
-                return null;
+                var product = _product.GetProductById(productId);
+                if (product != null)
+                {
+                    decimal discountedPrice = product.Price - (product.Price * (product.Discount / 100.0m));
+                    subtotal += product.Price * quantity;
+                    totalDiscount += Math.Round((product.Price * quantity) - (discountedPrice * quantity), 2);
+
+                    newSale.SaleProducts.Add(new SaleProduct
+                    {
+                        Product = product.ProductId,
+                        Quantity = quantity,
+                        Price = product.Price,
+                        Discount = product.Discount
+                    });
+                }
             }
+
+            newSale.Subtotal = subtotal;
+            newSale.TotalDiscount = totalDiscount;
+            newSale.Taxes = 1.21m;
+            newSale.TotalPay = Math.Round(((subtotal - totalDiscount) * newSale.Taxes),2);
+
+            return newSale;
         }
 
     }

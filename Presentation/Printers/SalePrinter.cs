@@ -47,5 +47,7 @@ namespace Presentation.Printers
                 Console.WriteLine($"Error al imprimir el detalle de la venta: {ex.Message}");
             }
         }
+
+
     }
 }
