@@ -34,19 +34,19 @@ namespace Infraestructure.Persistence
                 entity.HasKey(s => s.SaleId);
 
                 entity.Property(s => s.TotalPay)
-                .HasColumnType("decimal( 18, 2)")
+                .HasColumnType("decimal( 15, 2)")
                 .IsRequired();
 
                 entity.Property(s => s.Subtotal)
-                .HasColumnType("decimal( 18, 2)")
+                .HasColumnType("decimal( 15, 2)")
                 .IsRequired();
 
                 entity.Property(s => s.TotalDiscount)
-                .HasColumnType("decimal( 18, 2)")
+                .HasColumnType("decimal( 15, 2)")
                 .IsRequired();
 
                 entity.Property(s => s.Taxes)
-                .HasColumnType("decimal( 18, 2)")
+                .HasColumnType("decimal( 15, 2)")
                 .IsRequired();
 
                 entity.Property(s => s.Date)
@@ -70,18 +70,18 @@ namespace Infraestructure.Persistence
                 .IsRequired();
 
                 entity.Property(sp => sp.Price)
-                .HasColumnType("decimal( 18, 2)")
+                .HasColumnType("decimal( 15, 2)")
                 .IsRequired();
 
                 entity.Property(sp => sp.Discount);
 
                 entity.HasOne<Sale>(sp => sp.SaleName)
                     .WithMany(s => s.SaleProducts)
-                    .HasForeignKey(x => x.Sale);
+                    .HasForeignKey(sp => sp.Sale);
                 
                 entity.HasOne<Product>(sp => sp.ProductName)
                     .WithMany(p => p.SaleProducts)
-                    .HasForeignKey(x => x.Product);
+                    .HasForeignKey(sp => sp.Product);
 
             });
 
@@ -99,7 +99,7 @@ namespace Infraestructure.Persistence
                 .HasMaxLength(255);
 
                 entity.Property(p => p.Price)
-                .HasColumnType("decimal( 18, 2)")
+                .HasColumnType("decimal( 15, 2)")
                 .IsRequired();
 
                 entity.Property(p => p.Category)
@@ -112,7 +112,7 @@ namespace Infraestructure.Persistence
 
                 entity.HasOne(p => p.CategoryName)
                 .WithMany(c => c.Products)
-                .HasForeignKey(x => x.Category);
+                .HasForeignKey(p => p.Category);
 
             });
 
