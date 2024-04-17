@@ -20,8 +20,6 @@ namespace Infraestructure.Query
             return _context.Products.Include(x => x.CategoryName).ToList();
         }
         
-       
-
         public Product GetProductById(Guid id)
         {
            return _context.Products.FirstOrDefault(product => product.ProductId == id);

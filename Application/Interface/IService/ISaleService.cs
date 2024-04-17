@@ -4,7 +4,7 @@ namespace Application.Interface.IService
 {
     public interface ISaleService
     {
-        public Sale GenerateSale(List<(Guid productId, int quantity)> productIdsAndQuantities);
-        public void CreateSale(List<(Guid productId, int quantity)> productIdsAndQuantities);
+        public bool GenerateSale(List<(Guid productId, int quantity)> productIdsAndQuantities);
+        public Sale CalculateSale(List<(Guid productId, int quantity)> productIdsAndQuantities);
     }
 }

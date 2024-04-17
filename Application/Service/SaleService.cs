@@ -17,43 +17,25 @@ namespace Application.Service
             _product = product;
             _salePrinter = printer;
         }
-
-        public void CreateSale(List<(Guid productId, int quantity)> productIdsAndQuantities)
+        public bool GenerateSale(List<(Guid productId, int quantity)> productIdsAndQuantities)
         {
-            var sale = GenerateSale(productIdsAndQuantities);
-
-            if (sale.SaleProducts.Count > 0)
+            try
             {
-                _salePrinter.SaleDetail(sale);
+                var sale = CalculateSale(productIdsAndQuantities);
 
-                Console.Write("\n¿Desea registrar y luego imprimir la venta? (S/N): ");
-                string confirmation = Console.ReadLine();
-
-                if (confirmation.ToUpper() == "S")
-                {
-                    _saleCommand.AddSale(sale);
-
-                    _salePrinter.SalePrint(sale);
-
-                    Console.WriteLine("\nVenta registrada e impresa exitosamente.\n");
-                    Console.WriteLine("\nPresione una tecla cualquiera para volver al menu...");
-                }
-                else
-                {
-                    Console.WriteLine("Venta cancelada.");
-                    Console.WriteLine("\nPresione una tecla cualquiera para volver al menu...");
-                }
+                _saleCommand.AddSale(sale); 
+                _salePrinter.SalePrint(sale); 
+                return true;
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine("La venta no contiene ningún producto.");
-                Console.WriteLine("\nPresione una tecla cualquiera para volver al menu...");
+                Console.WriteLine("Error al crear la venta: " + ex.Message);
+                return false;
             }
         }
-
-        public Sale GenerateSale(List<(Guid productId, int quantity)> productIdsAndQuantities)
+        public Sale CalculateSale(List<(Guid productId, int quantity)> productIdsAndQuantities)
         {
-            var newSale = new Sale
+            var sale = new Sale 
             {
                 Date = DateTime.Now,
                 SaleProducts = new List<SaleProduct>()
@@ -71,7 +53,7 @@ namespace Application.Service
                     subtotal += product.Price * quantity;
                     totalDiscount += Math.Round((product.Price * quantity) - (discountedPrice * quantity), 2);
 
-                    newSale.SaleProducts.Add(new SaleProduct
+                    sale.SaleProducts.Add(new SaleProduct
                     {
                         Product = product.ProductId,
                         Quantity = quantity,
@@ -81,13 +63,13 @@ namespace Application.Service
                 }
             }
 
-            newSale.Subtotal = subtotal;
-            newSale.TotalDiscount = totalDiscount;
-            newSale.Taxes = 1.21m;
-            newSale.TotalPay = Math.Round(((subtotal - totalDiscount) * newSale.Taxes),2);
+            sale.Subtotal = subtotal;
+            sale.TotalDiscount = totalDiscount;
+            sale.Taxes = 1.21m;
+            sale.TotalPay = Math.Round(((subtotal - totalDiscount) * sale.Taxes), 2);
 
-            return newSale;
+            return sale;
         }
-
     }
 }
+

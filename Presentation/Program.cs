@@ -4,6 +4,7 @@ using Application.Interface.IQuery;
 using Application.Interface.IService;
 using Application.Service;
 using Infraestructure.Command;
+using Infraestructure.Controller;
 using Infraestructure.Persistence;
 using Infraestructure.Query;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,8 +27,9 @@ class Program
                 services.AddTransient<ISaleCommand, SaleCommand>();
                 services.AddScoped<ISalePrinter, SalePrinter>();
                 services.AddScoped<IProductPrinter, ProductPrinter>();
-                services.AddScoped<SaleMenu>();
-                services.AddScoped<Menu>(); 
+                services.AddScoped<ProductController>();
+                services.AddScoped<SaleController>();          
+                services.AddScoped<Menu>();      
             });
 
         var app = builder.Build();

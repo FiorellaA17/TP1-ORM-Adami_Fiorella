@@ -20,13 +20,11 @@ namespace Presentation.Printers
                         PrintProduct(product);
                     }
                 }
-
                 else
                 {
                     Console.WriteLine("\nActualmente no hay productos en lista.\n");
                 }
             }
-
             catch (Exception ex)
             {
                 Console.WriteLine($"Error al listar los productos: {ex.Message}");
@@ -49,7 +47,6 @@ namespace Presentation.Printers
             {
                 Console.WriteLine($"Error al imprimir el producto: {ex.Message}");
             }
-
         }
     }
 }

@@ -23,8 +23,6 @@ namespace Presentation.Printers
 
                 Console.WriteLine("\n----- Fin Impresión -----\n");
             }
-            
-
             catch (Exception ex)
             {
                 Console.WriteLine($"Error al imprimir la venta: {ex.Message}");
@@ -47,7 +45,5 @@ namespace Presentation.Printers
                 Console.WriteLine($"Error al imprimir el detalle de la venta: {ex.Message}");
             }
         }
-
-
     }
 }

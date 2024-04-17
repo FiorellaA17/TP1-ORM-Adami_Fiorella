@@ -1,21 +1,19 @@
 ﻿using Application.Interface.IPrinter;
 using Application.Interface.IService;
+using Infraestructure.Controller;
 
 
 namespace Presentation.Menu
 {
     public class Menu
     {
-        private readonly IProductService _ProductService;
-        //private readonly ISaleService _SaleService;
-        private readonly IProductPrinter _productPrinter;
-        private readonly SaleMenu _saleMenu;
+        private readonly ProductController _productController;
+        private readonly SaleController _saleController;
 
-        public Menu(IProductService productService, IProductPrinter productPrinter, SaleMenu saleMenu)
+        public Menu(ProductController productController, SaleController saleController)
         {
-            _ProductService = productService;
-            _productPrinter = productPrinter;
-            _saleMenu = saleMenu;
+            _productController = productController;
+            _saleController = saleController;
         }
         public void ShowMenu()
         {
@@ -36,13 +34,10 @@ namespace Presentation.Menu
                 switch (option)
                 {
                     case "1":
-                        _productPrinter.ListProductDetail(_ProductService.GetListProducts());
-                        //StartSale();
-                        _saleMenu.ShowSaleMenu();
+                        _productController.GetListProducts();
                         break;
                     case "2":
-                        //StartSale();
-                        _saleMenu.ShowSaleMenu();
+                        _saleController.CreateSale();
                         break;
                     case "0":
                         Console.WriteLine("¡Hasta luego!");
@@ -57,11 +52,5 @@ namespace Presentation.Menu
                 
             }
         }
-
-        //private void StartSale()
-        //{
-        //    var saleMenu = new SaleMenu(_ProductService,_SaleService);
-        //    saleMenu.ShowSaleMenu();
-        //}
     }
 }
