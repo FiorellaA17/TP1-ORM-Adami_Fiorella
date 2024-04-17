@@ -26,6 +26,7 @@ class Program
                 services.AddTransient<ISaleCommand, SaleCommand>();
                 services.AddScoped<ISalePrinter, SalePrinter>();
                 services.AddScoped<IProductPrinter, ProductPrinter>();
+                services.AddScoped<SaleMenu>();
                 services.AddScoped<Menu>(); 
             });
 

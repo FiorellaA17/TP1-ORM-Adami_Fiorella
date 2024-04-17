@@ -7,16 +7,16 @@ namespace Presentation.Menu
     public class Menu
     {
         private readonly IProductService _ProductService;
-        private readonly ISaleService _SaleService;
+        //private readonly ISaleService _SaleService;
         private readonly IProductPrinter _productPrinter;
+        private readonly SaleMenu _saleMenu;
 
-        public Menu(IProductService productService, ISaleService saleService, IProductPrinter productPrinter)
+        public Menu(IProductService productService, IProductPrinter productPrinter, SaleMenu saleMenu)
         {
             _ProductService = productService;
-            _SaleService = saleService;
             _productPrinter = productPrinter;
+            _saleMenu = saleMenu;
         }
-
         public void ShowMenu()
         {
             string option;
@@ -37,10 +37,12 @@ namespace Presentation.Menu
                 {
                     case "1":
                         _productPrinter.ListProductDetail(_ProductService.GetListProducts());
-                        StartSale();
+                        //StartSale();
+                        _saleMenu.ShowSaleMenu();
                         break;
                     case "2":
-                        StartSale();
+                        //StartSale();
+                        _saleMenu.ShowSaleMenu();
                         break;
                     case "0":
                         Console.WriteLine("¡Hasta luego!");
@@ -56,10 +58,10 @@ namespace Presentation.Menu
             }
         }
 
-        private void StartSale()
-        {
-            var saleMenu = new SaleMenu(_ProductService,_SaleService);
-            saleMenu.ShowSaleMenu();
-        }
+        //private void StartSale()
+        //{
+        //    var saleMenu = new SaleMenu(_ProductService,_SaleService);
+        //    saleMenu.ShowSaleMenu();
+        //}
     }
 }
